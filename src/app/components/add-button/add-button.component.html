@@ -1,0 +1,25 @@
+<button class="button" [ngClass]="btnClass" (click)="activateModal = true">
+    {{ text }}
+</button>
+
+<!-- Modal -->
+<div class="modal" [ngClass]="{ 'is-active': activateModal }">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="card">
+            <div class="card-content">
+                <div class="field has-addons">
+                    <div class="control" style="width: 100%;">
+                        <input class="input" type="text" placeholder="Write anything" [(ngModel)]="itemText" (keyup.enter)="done()">
+                    </div>
+                    <div class="control">
+                        <a class="button" (click)="done()">
+                            {{ modalText }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close" (click)="activateModal = false"></button>
+</div>

@@ -1,0 +1,40 @@
+<ul *ngFor="let item of list; let i = index"> <!-- List of items -->
+    <li class="box">
+        <span *ngIf="item.children.length">
+            <button class="button is-white is-small is-pulled-left" (click)="item.openSublist = !item.openSublist">
+                <span class="is-size-6">
+                    {{ item.openSublist ? '^' : '>' }}
+                </span>
+            </button>
+            <small>({{item.children.length}})</small>
+        </span>
+        {{ item.text }}
+        <button class="button is-small is-white is-pulled-right has-text-danger" (click)="deleteItem(item, i)">
+            Delete
+        </button>
+        <app-add-button 
+            modalText="Edit" 
+            text="Edit"
+            [itemText]="item.text"
+            btnClass="is-white is-pulled-right is-small"
+            (onDone)="onEditItem($event, item)">
+        </app-add-button>
+        <app-add-button 
+            modalText="Add" 
+            text="New" 
+            btnClass="has-text-primary is-white is-pulled-right is-small"
+            (onDone)="onAddItem($event, item)">
+        </app-add-button>
+        <small class="is-pulled-right has-text-grey-light padding-top-5">
+            {{ item.createdAt | date }} &nbsp; &nbsp;
+        </small>
+    </li>
+
+    <div *ngIf="item.openSublist">
+        <app-list-item 
+            [list]="item.children" 
+            (onDelete)="onDeletedItem($event)"
+            (onEdit)="onEditedItem($event)">
+        </app-list-item>
+    </div>
+</ul>
